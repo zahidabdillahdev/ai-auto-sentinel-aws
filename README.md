@@ -1,58 +1,42 @@
-# ai-auto-sentinel-aws
-Automated image recognition and notification system built with AWS Lambda, Amazon Rekognition, and S3 using Python.
-
 # AI Auto-Sentinel AWS 🛡️
 
-An automated image recognition system built on AWS using Python. This project demonstrates how to integrate Cloud Infrastructure (S3) with Artificial Intelligence (Amazon Rekognition) to analyze images and detect objects with high confidence scores.
+An automated, serverless image recognition system built on AWS. This project integrates Cloud Storage, Event-Driven Functions, and AI to analyze and log object detection data in real-time.
+
+
+
+## 🏗️ Architecture
+1. **S3 Bucket**: Stores raw images.
+2. **S3 Trigger**: Detects new uploads and pokes AWS Lambda.
+3. **AWS Lambda**: The "Brain" that runs Python code on-demand.
+4. **Amazon Rekognition**: The "Eye" (AI) that identifies objects.
+5. **DynamoDB**: The "Memory" (Database) that stores analysis history.
 
 ## 🚀 Features
-- **Cloud Connectivity**: Validates secure programmatic access to AWS Singapore region.
-- **Infrastructure as Code (IaC)**: Automated S3 bucket provisioning using Boto3.
-- **AI Analysis**: Real-time object and label detection using Amazon Rekognition.
-- **Professional Logging**: Integrated Python logging for monitoring and debugging.
+- **Serverless Automation**: No manual script execution required after setup.
+- **AI-Powered**: High-confidence object detection using Amazon Rekognition.
+- **Data Persistence**: Analysis results are stored permanently in DynamoDB.
+- **Infrastructure as Code (IaC)**: Provisioning scripts included for S3.
 
-## 🛠️ Tech Stack
-- **Language**: Python 3.x
-- **SDK**: Boto3 (AWS SDK for Python)
-- **Cloud Provider**: AWS (S3, Rekognition, IAM)
-- **Environment**: GitHub Codespaces / VS Code
+## 📋 Tech Stack
+- **Language**: Python 3.12
+- **Infrastructure**: AWS (S3, Lambda, DynamoDB, IAM)
+- **AI Service**: Amazon Rekognition
+- **SDK**: Boto3
 
-## 📋 Prerequisites
-1. **AWS Account**: Active AWS account with an IAM User.
-2. **IAM Permissions**: `AdministratorAccess` or specific permissions for S3 and Rekognition.
-3. **AWS CLI**: Installed and configured via `aws configure`.
+## 🛠️ Components
+- `connection_test.py`: Initial connectivity check.
+- `create_resources.py`: Automated S3 bucket creation.
+- `analyze_image.py`: Manual testing script for AI analysis.
+- `lambda_function.py`: Production-grade serverless code for AWS Lambda.
 
-## ⚙️ Installation & Setup
-1. **Clone this repository**:
-   git clone [https://github.com/zahidabdillahdev/ai-auto-sentinel-aws.git](https://github.com/zahidabdillahdev/ai-auto-sentinel-aws.git)
-   cd ai-auto-sentinel-aws
+## ⚙️ How It Works
+1. Upload an image to your S3 bucket.
+2. The S3 Trigger automatically fires the `lambda_function`.
+3. The function sends the image to Rekognition and receives labels.
+4. The results are saved into a DynamoDB table named `sentinel-analysis-metadata`.
 
-2. **Install dependencies**:
-pip install boto3
-
-3. **Configure your AWS credentials**:
-aws configure
-
-## 🖥️ Usage
-Execute the scripts in the following order:
-1. **Test Connection**: Ensure your environment can talk to AWS.
-python connection_test.py
-
-2. **Create Resources**: Provision your dedicated S3 bucket.
-python create_resources.py
-
-3. **Analyze Image**: Upload and analyze your first image.
-python analyze_image.py
-
-## 📸 How to Test with Your Own Image
-You can test the AI with any image you like!
-
-1. **Upload your image**: Drag and drop your image (JPG/PNG) into the project folder in VS Code.
-2. **Rename the file**: Rename it to my-test-image.jpg.
-3. **Update the script**: Open analyze_image.py and change the IMAGE_TO_ANALYZE variable:
-IMAGE_TO_ANALYZE = "my-test-image.jpg"
-4. **Run the analysis**:
-python analyze_image.py
+## 📸 Testing with Your Own Image
+Simply drag and drop any `.jpg` or `.png` file into your S3 bucket via the AWS Console, then check your DynamoDB table for the results!
 
 ## 📝 License
-This project is licensed under the MIT License.
+MIT License
